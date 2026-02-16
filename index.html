@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Louie Jay Ilustrisimo | Full-Stack Development & Computer Vision</title>
+    <link rel="icon" type="image/png" href="assets/images/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        /* Base Styles */
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+            background-color: #0F172A;
+            color: #E2E8F0;
+            background-image: radial-gradient(circle at 50% 10%, #1e293b 0%, #0F172A 70%);
+        }
+
+        /* Gradient Text */
+        .pro-gradient-text {
+            background-image: linear-gradient(to right, #0EA5E9, #22D3EE);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
+        }
+
+        /* --- ANIMATION STYLES --- */
+        .animate-fade-in {
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .animate-target {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 1.2s ease-out, transform 1.2s ease-out;
+            will-change: opacity, transform;
+        }
+
+        .animate-target.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- HORIZONTAL SCROLL STYLES --- */
+        .horizontal-scroll-snap {
+            scroll-snap-type: x mandatory;
+
+            &::-webkit-scrollbar {
+                display: none;
+            }
+
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .snap-center {
+            scroll-snap-align: center;
+        }
+
+        /* --- PROJECT CARD DESIGN --- */
+        .pro-card-new {
+            transition: all 0.4s ease-in-out;
+            border: 1px solid rgba(14, 165, 233, 0.2);
+            background-color: rgba(30, 41, 59, 0.6);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+        }
+
+        .pro-card-new:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 40px rgba(14, 165, 233, 0.5), 0 0 20px rgba(14, 165, 233, 0.3);
+            border-color: #0EA5E9;
+        }
+
+        /* Expertise Card */
+        .pro-card {
+            transition: all 0.4s ease-in-out;
+            border: 1px solid transparent;
+            background-color: #1E293B;
+        }
+
+        .pro-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(14, 165, 233, 0.2), 0 0 15px rgba(14, 165, 233, 0.5);
+            border-color: #0EA5E9;
+        }
+
+        .btn-primary-glow:hover {
+            box-shadow: 0 0 20px rgba(14, 165, 233, 0.8), 0 0 8px rgba(14, 165, 233, 0.5);
+        }
+
+        .nav-line-effect {
+            position: relative;
+            text-decoration: none;
+            padding-bottom: 5px;
+        }
+
+        .nav-line-effect::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #22D3EE;
+            transition: width 0.3s ease-out;
+        }
+
+        .nav-line-effect:hover::after {
+            width: 100%;
+        }
+    </style>
+    <script src="js/data.js"></script>
+</head>
+
+<body class="bg-slate-900 min-h-screen">
+    <header class="sticky top-0 z-50 bg-slate-900/90 backdrop-blur-sm border-b border-slate-700/50 animate-fade-in">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html"
+                class="text-3xl font-extrabold pro-gradient-text hover:opacity-90 transition duration-300">
+                LJI.dev
+            </a>
+            <nav class="space-x-8 hidden sm:block">
+                <a href="#about"
+                    class="nav-line-effect text-slate-300 hover:text-sky-400 transition duration-300 font-medium">About</a>
+                <a href="#skills"
+                    class="nav-line-effect text-slate-300 hover:text-sky-400 transition duration-300 font-medium">Expertise</a>
+                <a href="#portfolio"
+                    class="nav-line-effect text-slate-300 hover:text-sky-400 transition duration-300 font-medium">Portfolio</a>
+                <a href="#contact"
+                    class="nav-line-effect text-slate-300 hover:text-sky-400 transition duration-300 font-medium">Contact</a>
+            </nav>
+            <button id="menu-button" class="sm:hidden text-sky-400 hover:text-sky-200 transition duration-300"
+                aria-label="Toggle navigation">
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+            </button>
+        </div>
+        <nav id="mobile-menu" class="hidden sm:hidden max-w-7xl mx-auto px-6 pb-4">
+            <div class="flex flex-col space-y-3 pt-3">
+                <a href="#about"
+                    class="text-slate-300 hover:text-sky-400 transition duration-300 font-medium text-lg w-full py-1">About</a>
+                <a href="#skills"
+                    class="text-slate-300 hover:text-sky-400 transition duration-300 font-medium text-lg w-full py-1">Expertise</a>
+                <a href="#portfolio"
+                    class="text-slate-300 hover:text-sky-400 transition duration-300 font-medium text-lg w-full py-1">Portfolio</a>
+                <a href="#contact"
+                    class="text-slate-300 hover:text-sky-400 transition duration-300 font-medium text-lg w-full py-1">Contact</a>
+            </div>
+        </nav>
+    </header>
+
+    <div id="main-portfolio" class="animate-fade-in max-w-7xl mx-auto px-6 py-12 sm:py-20">
+
+        <section id="about" class="grid lg:grid-cols-5 gap-10 sm:gap-16 items-center pt-8 pb-20 animate-fade-in">
+            <div class="lg:col-span-3">
+                <span
+                    class="text-sky-400 font-semibold text-xs sm:text-sm tracking-widest uppercase mb-4 block animate-target"
+                    style="transition-delay: 0.1s;">
+                    3RD YEAR BSIT | 2 YEARS OF DEVELOPMENT EXPERIENCE
+                </span>
+                <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold leading-tight sm:leading-snug mb-6 animate-target"
+                    style="transition-delay: 0.3s;">
+                    Full-Stack Developer <span class="pro-gradient-text">Specializing in PHP & Computer Vision</span>.
+                    <br>
+                    <span class="text-2xl sm:text-3xl font-bold text-sky-400 block mt-2">AI-Augmented Engineer &
+                        Full-Stack Developer</span>
+                </h1>
+
+                <p class="text-base sm:text-lg text-slate-300 mb-8 max-w-2xl animate-target"
+                    style="transition-delay: 0.5s;">
+                    I am Louie Jay Ilustrisimo, a third-year BSIT student with two years of practical experience in
+                    developing robust web applications. My passion is translating complex requirements into functional,
+                    high-performance software.
+                </p>
+
+                <p class="text-base sm:text-lg text-slate-300 mb-10 max-w-2xl border-l-4 border-sky-600 pl-4 bg-slate-800/30 p-4 rounded-r-lg animate-target"
+                    style="transition-delay: 0.7s;">
+                    Featured Skill: Creator of the Human Emotion Attendance System—a full-stack PHP/MySQL application
+                    utilizing camera integration and computer vision. I am also an AI-Augmented Developer, leveraging
+                    modern AI tools to accelerate development and solve complex problems efficiently.
+                </p>
+
+                <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 animate-target"
+                    style="transition-delay: 0.9s;">
+                    <a href="#portfolio"
+                        class="btn-primary-glow px-8 py-3 bg-sky-600 text-white font-bold rounded-lg shadow-lg hover:bg-sky-700 transition duration-300 transform hover:scale-[1.05] active:scale-[0.98] text-center">
+                        View My Projects
+                    </a>
+                    <a href="#contact"
+                        class="px-8 py-3 border border-slate-600 text-slate-300 font-bold rounded-lg hover:bg-slate-700 transition duration-300 transform hover:scale-[1.05] active:scale-[0.98] text-center">
+                        Send Me a Message
+                    </a>
+                </div>
+            </div>
+
+            <div class="lg:col-span-2 flex justify-center items-center order-first lg:order-none animate-target"
+                style="transition-delay: 0.5s;">
+                <div id="profile-container"
+                    class="relative p-1 bg-slate-800 rounded-xl shadow-2xl shadow-sky-900/50 transform hover:rotate-1 transition duration-500">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-br from-sky-500 to-cyan-500 rounded-xl opacity-20 blur-xl">
+                    </div>
+                    <img id="profile-image" src="assets/images/pfp2.jpg" alt="Louie Jay Ilustrisimo"
+                        class="w-64 h-64 sm:w-80 sm:h-80 object-cover rounded-lg border-2 border-slate-700 relative z-10">
+                </div>
+            </div>
+        </section>
+
+        <hr class="border-slate-700 my-10 animate-target">
+
+        <section id="languages" class="py-12 sm:py-20">
+            <h2 class="text-3xl sm:text-4xl font-extrabold mb-12 text-center pro-gradient-text animate-target">Languages
+                Familiarity</h2>
+            <div id="languages-container"
+                class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
+                <!-- Languages content will be injected here via JS -->
+            </div>
+        </section>
+
+        <hr class="border-slate-700 my-10 animate-target">
+
+        <section id="skills" class="py-12 sm:py-20">
+            <h2 class="text-3xl sm:text-4xl font-extrabold mb-12 text-center pro-gradient-text animate-target">Technical
+                Expertise</h2>
+            <div id="expertise-container" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Expertise content will be injected here via JS -->
+            </div>
+        </section>
+
+        <hr class="border-slate-700 my-10 animate-target">
+
+        <section id="portfolio" class="py-12 sm:py-20 animate-target">
+            <h2 class="text-3xl sm:text-4xl font-extrabold mb-12 text-center pro-gradient-text animate-target">My
+                Projects</h2>
+
+            <div class="">
+                <div id="projects-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 px-0">
+                    <!-- Projects content will be injected here via JS -->
+                </div>
+            </div>
+        </section>
+
+        <hr class="border-slate-700 my-10 animate-target">
+
+        <section id="contact" class="py-12 sm:py-20 animate-target">
+            <h2 class="text-3xl sm:text-4xl font-extrabold mb-12 text-center pro-gradient-text animate-target">Contact &
+                Project Inquiries</h2>
+
+            <div class="bg-slate-800/70 p-6 sm:p-10 rounded-xl shadow-2xl border border-slate-700/50 max-w-2xl mx-auto animate-target"
+                style="transition-delay: 0.1s;">
+                <p class="text-slate-300 mb-6 text-center text-sm sm:text-base">
+                    Have a project idea, a job offer, or need a robust custom application? Write down your message or
+                    project requirements below!
+                </p>
+
+                <!-- Static Form (No functionality enabled) -->
+                <form action="mailto:louieabout.page@gmail.com" method="post" enctype="text/plain" class="space-y-6">
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-slate-300 mb-1">Your Name</label>
+                        <input type="text" id="name" name="name" required
+                            class="w-full px-4 py-2 rounded-lg bg-slate-700 border border-slate-600 focus:border-sky-500 focus:ring-sky-500 text-white">
+                    </div>
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-slate-300 mb-1">Your Email</label>
+                        <input type="email" id="email" name="email" required
+                            class="w-full px-4 py-2 rounded-lg bg-slate-700 border border-slate-600 focus:border-sky-500 focus:ring-sky-500 text-white">
+                    </div>
+                    <div>
+                        <label for="message" class="block text-sm font-medium text-slate-300 mb-1">Message / Project
+                            Details</label>
+                        <textarea id="message" name="message" rows="5" required
+                            class="w-full px-4 py-2 rounded-lg bg-slate-700 border border-slate-600 focus:border-sky-500 focus:ring-sky-500 text-white"></textarea>
+                    </div>
+                    <button type="submit"
+                        class="w-full btn-primary-glow px-8 py-3 bg-sky-600 text-white font-bold rounded-lg shadow-lg hover:bg-sky-700 transition duration-300">
+                        Send Email
+                    </button>
+                </form>
+
+                <div id="social-links"
+                    class="flex flex-wrap justify-center gap-4 sm:gap-6 mt-8 pt-4 border-t border-slate-700">
+                    <!-- Social links injected via JS -->
+                </div>
+            </div>
+        </section>
+
+        <section id="banner" class="max-w-7xl mx-auto px-6 sm:px-8 mb-12 animate-target">
+            <a href="https://louieabout.page.gd/" target="_blank"
+                class="block bg-gradient-to-r from-amber-500 to-orange-600 text-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition duration-300 transform hover:-translate-y-1 text-center group">
+                <h3 class="text-xl sm:text-2xl font-bold mb-2">Original Dynamic PHP Portfolio 🚀</h3>
+                <p class="text-sm sm:text-base opacity-90 group-hover:opacity-100">
+                    This portfolio was originally built with PHP & MySQL. I've migrated it to a static HTML site for
+                    this school activity.<br>
+                    <span class="underline font-semibold mt-2 inline-block">Click here to view the original live version
+                        at louieabout.page.gd</span>
+                </p>
+            </a>
+        </section>
+
+        </main>
+
+        <footer class="bg-slate-900 border-t border-slate-800 py-12">
+            <div class="max-w-7xl mx-auto px-6 py-8 text-center text-slate-500 text-xs sm:text-sm">
+                &copy; 2026 Louie Jay Ilustrisimo. | Built with modern HTML/Tailwind CSS.
+            </div>
+        </footer>
+
+        <script>
+            // --- RENDER CONTENT FROM DATA.JS ---
+            document.addEventListener('DOMContentLoaded', () => {
+
+                // 1. Render Expertise
+                const expertiseContainer = document.getElementById('expertise-container');
+                let delay = 0;
+                expertise.forEach(item => {
+                    const borderClass = 'border-' + (item.border_color || 'sky-600');
+                    const iconHtml = item.icon_type === 'text' && item.icon_text
+                        ? `<div class="text-3xl text-sky-400 mb-3 font-mono">${item.icon_text}</div>`
+                        : (item.icon_text ? `<div class="text-3xl text-cyan-400 mb-3">${item.icon_text}</div>` : '');
+
+                    const html = `
+            <div class="pro-card p-6 rounded-xl border-t-4 ${borderClass} animate-target" style="transition-delay: ${delay}s;">
+                <h3 class="text-xl sm:text-2xl font-bold mb-2 pro-gradient-text">${item.title}</h3>
+                <div class="flex justify-between items-center mb-4">
+                    <h4 class="text-white text-base font-bold">${item.heading}</h4>
+                    ${iconHtml}
+                </div>
+                <p class="text-slate-400 text-sm">${item.description}</p>
+            </div>
+            `;
+                    expertiseContainer.innerHTML += html;
+                    delay += 0.1;
+                });
+
+                // 2. Render Projects
+                const projectsContainer = document.getElementById('projects-container');
+                delay = 0;
+                projects.forEach(project => {
+                    let statusText = 'View Details →';
+                    let statusClass = 'text-sky-400 bg-sky-900/30 border-sky-600';
+                    let statusLabelColor = 'bg-slate-600';
+                    const statusLabel = project.status.replace('-', ' ').replace(/\b\w/g, c => c.toUpperCase());
+
+                    if (project.status === 'in-progress') {
+                        statusText = project.completion_percentage + '% Complete 🚧';
+                        statusClass = 'text-orange-400 bg-orange-900/30 border-orange-600';
+                        statusLabelColor = 'bg-orange-600';
+                    } else if (project.status === 'planned') {
+                        statusText = 'Planned for Q2 💡';
+                        statusClass = 'text-purple-400 bg-purple-900/30 border-purple-600';
+                        statusLabelColor = 'bg-purple-600';
+                    } else {
+                        statusText = 'Deep Dive to the Project →';
+                        statusLabelColor = 'bg-green-600';
+                    }
+
+                    // Checkmark for completed
+                    const checkIcon = project.status === 'completed' ?
+                        `<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>` : '';
+
+                    // Link to project.html with ID parameter
+                    const projectUrl = `project.html?id=${project.id}`;
+
+                    const html = `
+            <a href="${projectUrl}" class="pro-card-new animate-target block rounded-xl overflow-hidden cursor-pointer relative h-full flex flex-col" style="transition-delay: ${delay}s;">
+                <span class="absolute top-0 left-0 px-4 py-1 text-xs font-bold text-white uppercase rounded-br-lg shadow-md z-10 ${statusLabelColor}">
+                    ${statusLabel}
+                </span>
+                <img src="${project.image_path}" alt="${project.title} Screenshot" class="w-full h-64 object-cover object-top border-b border-slate-700 transition duration-500 group-hover:opacity-80">
+                <div class="p-6 flex flex-col flex-grow">
+                    <h3 class="text-2xl font-bold text-sky-400 mb-2">${project.title}</h3>
+                    <p class="text-slate-400 mb-4 text-sm sm:text-base line-clamp-3 flex-grow">${project.description}</p>
+                    <div class="mt-auto pt-4">
+                        <span class="inline-flex items-center px-4 py-2 text-sm font-semibold rounded-full transition duration-300 border ${statusClass} hover:bg-sky-700/50">
+                            ${statusText} ${checkIcon}
+                        </span>
+                    </div>
+                </div>
+            </a>
+            `;
+                    projectsContainer.innerHTML += html;
+                    delay += 0.1;
+                });
+
+                // 2.5 Render Languages
+                const languagesContainer = document.getElementById('languages-container');
+                if (languagesContainer && typeof languages !== 'undefined') {
+                    delay = 0;
+                    languages.forEach(lang => {
+                        const html = `
+                <div class="pro-card p-4 rounded-xl flex flex-col items-center justify-center text-center animate-target hover:bg-slate-800 transition duration-300" style="transition-delay: ${delay}s;">
+                    <div class="w-12 h-12 mb-3 ${lang.color}">
+                        ${lang.icon_svg}
+                    </div>
+                    <span class="text-slate-200 font-semibold">${lang.name}</span>
+                </div>
+                `;
+                        languagesContainer.innerHTML += html;
+                        delay += 0.05;
+                    });
+                }
+
+                // 3. Render Social Links
+                const socialContainer = document.getElementById('social-links');
+                if (settings.linkedin_url) {
+                    socialContainer.innerHTML += `
+             <a href="${settings.linkedin_url}" target="_blank" class="flex items-center text-slate-400 hover:text-sky-400 transition duration-300 group text-sm sm:text-base">
+                <svg class="h-5 w-5 sm:h-6 sm:w-6 mr-2 transition duration-300" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                </svg>
+                <span class="font-medium">LinkedIn</span>
+              </a>`;
+                }
+                if (settings.github_url) {
+                    socialContainer.innerHTML += `
+            <a href="${settings.github_url}" target="_blank" class="flex items-center text-slate-400 hover:text-sky-400 transition duration-300 group text-sm sm:text-base">
+                <svg class="h-5 w-5 sm:h-6 sm:w-6 mr-2 transition duration-300" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 0c-6.626 0-12 5.372-12 12 0 5.312 3.438 9.8 8.207 11.387.6.111.793-.261.793-.577 0-.285-.011-1.042-.017-2.043-3.338.724-4.042-1.61-4.042-1-1.61-.545-1.385-1.328-1.753-1.328-1.753-1.089-.745.083-.729.083-.729 1.205.084 1.838 1.238 1.838 1.238 1.07 1.835 2.809 1.305 3.493.998.108-.779.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.238-3.22-.124-.303-.535-1.524.118-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.046.138 3.003.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.652.242 2.873.118 3.176.77.839 1.233 1.909 1.233 3.22 0 4.609-2.807 5.624-5.479 5.923.43.372.823 1.102.823 2.222 0 1.604-.015 2.896-.015 3.286 0 .319.189.694.799.576c4.767-1.589 8.203-6.087 8.203-11.387 0-6.627-5.373-12-12-12z"/>
+                </svg>
+                <span class="font-medium">GitHub</span>
+            </a>`;
+                }
+                if (settings.facebook_url) {
+                    socialContainer.innerHTML += `
+            <a href="${settings.facebook_url}" target="_blank" class="flex items-center text-slate-400 hover:text-sky-400 transition duration-300 group text-sm sm:text-base">
+                <svg class="h-5 w-5 sm:h-6 sm:w-6 mr-2 transition duration-300" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 0C5.373 0 0 5.373 0 12c0 6.016 4.432 11.01 10.218 11.75v-8.216h-2.91v-3.534h2.91v-2.66c0-3.14 1.857-4.872 4.721-4.872 1.391 0 2.583.1 2.939.143v3.136h-1.859c-1.46 0-1.745.694-1.745 1.713v2.21h3.515l-.568 3.534h-2.947v8.216C19.568 23.01 24 18.016 24 12 24 5.373 18.627 0 12 0z"/>
+                </svg>
+                <span class="font-medium">Facebook</span>
+            </a>`;
+                }
+
+                // Initialize Observer (Original Logic)
+                initializeObserver();
+            });
+
+            // --- ORIGINAL INTERSECTION OBSERVER LOGIC ---
+            let globalObserver;
+            let targets = [];
+
+            function initializeObserver() {
+                if (globalObserver) { globalObserver.disconnect(); }
+
+                if ('IntersectionObserver' in window) {
+                    const observerOptions = { root: null, rootMargin: '0px', threshold: 0.01 };
+                    globalObserver = new IntersectionObserver((entries, observer) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                entry.target.classList.add('is-visible');
+                            } else {
+                                entry.target.classList.remove('is-visible');
+                            }
+                        });
+                    }, observerOptions);
+
+                    // Wait a tick for DOM updates
+                    setTimeout(() => {
+                        targets = Array.from(document.querySelectorAll('.animate-target'));
+                        targets.forEach(target => {
+                            globalObserver.observe(target);
+                        });
+                    }, 100);
+                } else {
+                    targets.forEach(target => {
+                        target.classList.add('is-visible');
+                    });
+                }
+            }
+
+            // New Mobile Menu Logic
+            const menuButton = document.getElementById('menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (menuButton && mobileMenu) {
+                menuButton.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                });
+                mobileMenu.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        setTimeout(() => mobileMenu.classList.add('hidden'), 100);
+                    });
+                });
+            }
+        </script>
+</body>
+
+</html>
