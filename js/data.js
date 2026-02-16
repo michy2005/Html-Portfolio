@@ -238,7 +238,7 @@ const projects = [
     },
     {
         id: 13,
-        title: 'Bantayan Smart Application',
+        title: 'Banyan: a Bantayan Smart Application',
         subtitle: 'Self Made Mobile App using PHP',
         description: 'Focusing on integrating emergency response, local business directories, tourist spots data, and application with island feeds',
         video_section_title: 'Video Demonstration',
